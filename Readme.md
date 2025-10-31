@@ -42,10 +42,4 @@ O projeto usa **LocalStorage** e **IndexedDB** para salvar dados localmente, per
 - **LocalStorage** – usado para salvar as vendas  
 - **IndexedDB** – usado para armazenar relatórios mensais  
 
----
 
-## 💾 Como Usar
-
-1. Baixe ou clone este repositório:
-   ```bash
-   git clone https://github.com/seuusuario/sistema-xerox.git
