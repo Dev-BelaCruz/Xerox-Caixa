@@ -1,0 +1,41 @@
+# Sistema de Xerox e Impressão - .gitignore
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Cache e backups
+*.log
+*.tmp
+*.bak
+
+# Pastas de build ou dependências
+node_modules/
+dist/
+build/
+
+# Arquivos de ambiente
+.env
+.env.local
+
+# Configurações do editor
+.vscode/
+.idea/
+
+# Cache do navegador e arquivos locais
+*.swp
+*.swo
+
+# Arquivos de preview ou exportação
+*.zip
+*.rar
+*.tar
+*.gz
+
+# Backup do sistema
+__MACOSX/
+
+# Testes locais
+test/
+coverage/
