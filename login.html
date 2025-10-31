@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Sistema de Xerox</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 400px;
+        margin: 80px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    input {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .toggle {
+        text-align: center;
+        margin-top: 10px;
+        color: #007bff;
+        cursor: pointer;
+    }
+    .toggle:hover {
+        text-decoration: underline;
+    }
+    .error {
+        color: #f44336;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Serviços de Xerox</h1>
+        <div id="loginForm">
+            <h3>Login</h3>
+            <div class="error" id="loginError"></div>
+            <form>
+                <label for="loginUser">Usuário:</label>
+                <input type="text" id="loginUser" required>
+                <label for="loginPass">Senha:</label>
+                <input type="password" id="loginPass" required>
+                <button type="button" onclick="login()">Entrar</button>
+            </form>
+            <div class="toggle" onclick="showRegister()">Não tem conta? Cadastre-se</div>
+        </div>
+
+        <div id="registerForm" style="display:none;">
+            <h3>Cadastro</h3>
+            <div class="error" id="registerError"></div>
+            <form>
+                <label for="registerUser">Usuário:</label>
+                <input type="text" id="registerUser" required>
+                <label for="registerPass">Senha:</label>
+                <input type="password" id="registerPass" required>
+                <button type="button" onclick="register()">Cadastrar</button>
+            </form>
+            <div class="toggle" onclick="showLogin()">Já tem conta? Faça login</div>
+        </div>
+    </div>
+
+<script>
+    // Alternar entre login e cadastro
+    function showRegister() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+    }
+    function showLogin() {
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
+    }
+
+    // Cadastrar novo usuário
+    function register() {
+        const user = document.getElementById('registerUser').value.trim();
+        const pass = document.getElementById('registerPass').value.trim();
+        const errorBox = document.getElementById('registerError');
+
+        if (!user || !pass) {
+            errorBox.textContent = 'Preencha todos os campos.';
+            return;
+        }
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        if (users.find(u => u.user === user)) {
+            errorBox.textContent = 'Usuário já existe.';
+            return;
+        }
+
+        users.push({ user, pass });
+        localStorage.setItem('users', JSON.stringify(users));
+        errorBox.style.color = 'green';
+        errorBox.textContent = 'Cadastro realizado com sucesso!';
+        setTimeout(showLogin, 1000);
+    }
+
+    // Login de usuário
+    function login() {
+        const user = document.getElementById('loginUser').value.trim();
+        const pass = document.getElementById('loginPass').value.trim();
+        const errorBox = document.getElementById('loginError');
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const match = users.find(u => u.user === user && u.pass === pass);
+
+        if (match) {
+            localStorage.setItem('loggedUser', user);
+            window.location.href = 'index.html';
+        } else {
+            errorBox.textContent = 'Usuário ou senha incorretos.';
+        }
+    }
+
+    // Se já estiver logado, pula direto pro sistema
+    if (localStorage.getItem('loggedUser')) {
+        window.location.href = 'index.html';
+    }
+</script>
+</body>
+</html>
